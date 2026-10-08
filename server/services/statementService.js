@@ -68,12 +68,12 @@ export class StatementService {
     const periodString = `${fromDate.toLocaleDateString()} - ${toDate.toLocaleDateString()}`;
 
     return {
-      bankName: 'Aegis Secure Bank',
+      bankName: 'Suraksha Digital Bank',
       customerName: user.fullName,
       maskedAccountNumber,
       accountNumber: account.accountNumber,
       accountType: account.accountType,
-      currency: account.currency,
+      currency: account.currency || 'INR',
       period: periodString,
       fromDate,
       toDate,

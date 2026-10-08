@@ -31,15 +31,15 @@ export const Sidebar = ({ isMobileOpen, onCloseMobile }) => {
   const sidebarContent = (
     <div className="flex flex-col h-full py-6 px-4">
       {/* Simulation Watermark Banner */}
-      <div className="mb-6 px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-bank-50 to-blue-50 dark:from-bank-950/50 dark:to-slate-900 border border-bank-200/80 dark:border-bank-900/60">
+      <div className="mb-6 px-3.5 py-3 rounded-2xl bg-gradient-to-r from-sky-50 to-blue-50 dark:from-sky-950/50 dark:to-slate-900 border border-sky-200/80 dark:border-sky-900/60 shadow-sm">
         <div className="flex items-center space-x-2">
-          <Shield className="w-4 h-4 text-bank-600 dark:text-bank-400 flex-shrink-0" />
-          <span className="text-[11px] font-bold text-bank-900 dark:text-bank-200 tracking-wide uppercase">
-            Aegis Sandbox
+          <Shield className="w-4 h-4 text-sky-600 dark:text-sky-400 flex-shrink-0" />
+          <span className="text-[11px] font-extrabold text-sky-950 dark:text-sky-200 tracking-wide uppercase">
+            Suraksha NetBanking
           </span>
         </div>
         <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1 leading-tight">
-          Academic Banking Environment
+          Retail & Corporate Banking
         </p>
       </div>
 
@@ -55,8 +55,8 @@ export const Sidebar = ({ isMobileOpen, onCloseMobile }) => {
               className={({ isActive }) =>
                 `flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all ${
                   isActive
-                    ? 'bg-bank-600 text-white shadow-md shadow-bank-600/20 font-semibold'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60'
+                    ? 'bg-sky-600 text-white shadow-md shadow-sky-600/25 font-semibold'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-sky-50/80 dark:hover:bg-slate-800/60'
                 }`
               }
             >
@@ -69,12 +69,12 @@ export const Sidebar = ({ isMobileOpen, onCloseMobile }) => {
 
       {/* Trust & Compliance Badge */}
       <div className="mt-auto pt-4 border-t border-slate-200/60 dark:border-slate-800/60">
-        <div className="p-3 rounded-xl bg-slate-100/70 dark:bg-slate-800/40 text-center">
-          <p className="text-[11px] font-semibold text-slate-700 dark:text-slate-300">
-            Protected by Aegis MFA
+        <div className="p-3 rounded-xl bg-sky-50/60 dark:bg-slate-800/40 border border-sky-100 dark:border-slate-800 text-center">
+          <p className="text-[11px] font-bold text-sky-900 dark:text-sky-300">
+            Protected by Suraksha 2FA
           </p>
           <p className="text-[10px] text-slate-400 mt-0.5">
-            Encrypted End-to-End
+            IMPS • NEFT • RTGS • UPI
           </p>
         </div>
       </div>

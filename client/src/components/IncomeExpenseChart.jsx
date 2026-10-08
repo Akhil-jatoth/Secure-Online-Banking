@@ -36,7 +36,7 @@ export const IncomeExpenseChart = ({ data = [] }) => {
             tick={{ fontSize: 11, fill: '#94a3b8' }}
             axisLine={false}
             tickLine={false}
-            tickFormatter={(val) => `$${val}`}
+            tickFormatter={(val) => `₹${val}`}
           />
           <Tooltip
             contentStyle={{

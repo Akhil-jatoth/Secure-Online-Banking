@@ -32,9 +32,9 @@ export class AccountService {
       accountNumber,
       user: userId,
       accountType,
-      balance: 1000.00,
-      availableBalance: 1000.00,
-      currency: 'USD',
+      balance: 10000.00,
+      availableBalance: 10000.00,
+      currency: 'INR',
       status: ACCOUNT_STATUS.ACTIVE,
     });
     return newAccount;

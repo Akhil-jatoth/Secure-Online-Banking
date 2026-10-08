@@ -66,14 +66,14 @@ export const Register = () => {
           city: formData.city,
           state: formData.state,
           postalCode: formData.postalCode,
-          country: 'USA',
+          country: 'India',
         },
       };
 
       const res = await register(payload);
       if (res.success) {
-        toast.success(`Account opened successfully! Welcome to Aegis Bank.`);
-        navigate('/dashboard', { replace: true });
+        toast.success('Account created successfully! Please sign in with your password to receive your login OTP.');
+        navigate('/login', { replace: true, state: { registeredEmail: formData.email } });
       }
     } catch (err) {
       toast.error(err.response?.data?.message || 'Registration failed. Please check your details.');
@@ -84,87 +84,87 @@ export const Register = () => {
 
   return (
     <div className="w-full max-w-2xl">
-      <div className="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-xl">
+      <div className="bg-white/95 dark:bg-slate-900/95 border border-sky-200/80 dark:border-slate-800 rounded-3xl p-6 sm:p-10 shadow-2xl backdrop-blur-xl">
         <div className="text-center mb-8">
-          <div className="w-12 h-12 bg-bank-500/10 text-bank-400 rounded-2xl flex items-center justify-center mx-auto mb-3 border border-bank-500/20">
+          <div className="w-12 h-12 bg-sky-500/10 text-sky-600 dark:text-sky-400 rounded-2xl flex items-center justify-center mx-auto mb-3 border border-sky-500/20">
             <Shield className="w-6 h-6" />
           </div>
-          <h1 className="text-2xl font-extrabold text-white tracking-tight">Open a Secure Bank Account</h1>
-          <p className="text-xs text-slate-400 mt-1.5">
-            Instant digital registration with complimentary $2,500.00 opening balance
+          <h1 className="text-2xl font-extrabold text-slate-900 dark:text-white tracking-tight">Open a Suraksha Digital Account</h1>
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1.5">
+            Instant online registration with complimentary ₹25,000.00 INR opening balance
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Section 1: Personal Details */}
           <div>
-            <h3 className="text-xs font-bold text-bank-400 uppercase tracking-wider mb-4">
-              1. Personal & Contact Information
+            <h3 className="text-xs font-bold text-sky-600 dark:text-sky-400 uppercase tracking-wider mb-4">
+              1. Personal & Contact Information (KYC)
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {/* Full Name */}
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">Full Legal Name</label>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Full Legal Name</label>
                 <div className="relative">
-                  <User className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5 pointer-events-none" />
+                  <User className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5 pointer-events-none" />
                   <input
                     type="text"
                     name="fullName"
                     required
                     value={formData.fullName}
                     onChange={handleChange}
-                    placeholder="Jane Doe"
-                    className="w-full pl-10 pr-3.5 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-bank-500 outline-none"
+                    placeholder="Aarav Sharma"
+                    className="w-full pl-10 pr-3.5 py-2.5 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-sky-500 outline-none"
                   />
                 </div>
               </div>
 
               {/* Email */}
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">Email Address</label>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Email Address</label>
                 <div className="relative">
-                  <Mail className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5 pointer-events-none" />
+                  <Mail className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5 pointer-events-none" />
                   <input
                     type="email"
                     name="email"
                     required
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="jane@example.com"
-                    className="w-full pl-10 pr-3.5 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-bank-500 outline-none"
+                    placeholder="aarav.sharma@example.com"
+                    className="w-full pl-10 pr-3.5 py-2.5 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-sky-500 outline-none"
                   />
                 </div>
               </div>
 
               {/* Phone */}
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">Phone Number</label>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Mobile Number (WhatsApp/OTP)</label>
                 <div className="relative">
-                  <Phone className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5 pointer-events-none" />
+                  <Phone className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5 pointer-events-none" />
                   <input
                     type="tel"
                     name="phoneNumber"
                     required
                     value={formData.phoneNumber}
                     onChange={handleChange}
-                    placeholder="+1 (555) 019-2834"
-                    className="w-full pl-10 pr-3.5 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-bank-500 outline-none"
+                    placeholder="+91 98765 43210"
+                    className="w-full pl-10 pr-3.5 py-2.5 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-sky-500 outline-none"
                   />
                 </div>
               </div>
 
               {/* Date of Birth */}
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">Date of Birth</label>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Date of Birth</label>
                 <div className="relative">
-                  <Calendar className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5 pointer-events-none" />
+                  <Calendar className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5 pointer-events-none" />
                   <input
                     type="date"
                     name="dateOfBirth"
                     required
                     value={formData.dateOfBirth}
                     onChange={handleChange}
-                    className="w-full pl-10 pr-3.5 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-bank-500 outline-none"
+                    className="w-full pl-10 pr-3.5 py-2.5 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-sky-500 outline-none"
                   />
                 </div>
               </div>
@@ -173,58 +173,58 @@ export const Register = () => {
 
           {/* Section 2: Residential Address */}
           <div>
-            <h3 className="text-xs font-bold text-bank-400 uppercase tracking-wider mb-4">
-              2. Residential Address (KYC)
+            <h3 className="text-xs font-bold text-sky-600 dark:text-sky-400 uppercase tracking-wider mb-4">
+              2. Indian Residential Address (Aadhaar / KYC)
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="sm:col-span-3">
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">Street Address</label>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">Flat / House / Street Address</label>
                 <div className="relative">
-                  <MapPin className="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5 pointer-events-none" />
+                  <MapPin className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5 pointer-events-none" />
                   <input
                     type="text"
                     name="street"
                     value={formData.street}
                     onChange={handleChange}
-                    placeholder="742 Evergreen Terrace"
-                    className="w-full pl-10 pr-3.5 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-bank-500 outline-none"
+                    placeholder="Flat 402, Shanti Heights, MG Road"
+                    className="w-full pl-10 pr-3.5 py-2.5 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-sky-500 outline-none"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">City</label>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">City</label>
                 <input
                   type="text"
                   name="city"
                   value={formData.city}
                   onChange={handleChange}
-                  placeholder="Springfield"
-                  className="w-full px-3.5 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-bank-500 outline-none"
+                  placeholder="Bengaluru"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-sky-500 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">State</label>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">State</label>
                 <input
                   type="text"
                   name="state"
                   value={formData.state}
                   onChange={handleChange}
-                  placeholder="OR"
-                  className="w-full px-3.5 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-bank-500 outline-none"
+                  placeholder="Karnataka"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-sky-500 outline-none"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">Postal Code</label>
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">PIN Code (Postal)</label>
                 <input
                   type="text"
                   name="postalCode"
                   value={formData.postalCode}
                   onChange={handleChange}
-                  placeholder="97477"
-                  className="w-full px-3.5 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-sm text-white placeholder-slate-500 focus:ring-2 focus:ring-bank-500 outline-none"
+                  placeholder="560001"
+                  className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-sky-500 outline-none"
                 />
               </div>
             </div>

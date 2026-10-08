@@ -31,7 +31,7 @@ const otpSchema = new mongoose.Schema(
     },
     maxAttempts: {
       type: Number,
-      default: 3,
+      default: 5,
     },
     isUsed: {
       type: Boolean,
@@ -55,21 +55,33 @@ const otpSchema = new mongoose.Schema(
 
 // Verify OTP method
 otpSchema.methods.verifyCode = async function (candidateCode) {
-  if (this.isUsed) {
-    return { valid: false, reason: 'OTP has already been used' };
-  }
-  if (this.expiresAt < new Date()) {
-    return { valid: false, reason: 'OTP has expired' };
-  }
-  if (this.attempts >= this.maxAttempts) {
-    return { valid: false, reason: 'Maximum OTP verification attempts exceeded' };
+  const codeStr = String(candidateCode || '').trim();
+  if (!codeStr || codeStr.length !== 6) {
+    return { valid: false, reason: 'Please enter the complete 6-digit OTP code.' };
   }
 
-  const isMatch = await bcrypt.compare(candidateCode, this.otpHash);
+  if (this.isUsed) {
+    return { valid: false, reason: 'This OTP code has already been used. Please request a new code.' };
+  }
+
+  if (this.expiresAt < new Date()) {
+    return { valid: false, reason: 'OTP code has expired. Please click Resend OTP to receive a new code.' };
+  }
+
+  if (this.attempts >= this.maxAttempts) {
+    return { valid: false, reason: 'Maximum attempts exceeded for this code. Please click Resend OTP to receive a fresh code.' };
+  }
+
+  const isMatch = await bcrypt.compare(codeStr, this.otpHash);
   if (!isMatch) {
     this.attempts += 1;
     await this.save();
-    return { valid: false, reason: 'Invalid OTP code', attemptsRemaining: this.maxAttempts - this.attempts };
+    const remaining = Math.max(0, this.maxAttempts - this.attempts);
+    return {
+      valid: false,
+      reason: remaining > 0 ? `Incorrect OTP code entered. ${remaining} attempt(s) remaining.` : 'Maximum attempts exceeded. Please request a new OTP.',
+      attemptsRemaining: remaining,
+    };
   }
 
   this.isUsed = true;

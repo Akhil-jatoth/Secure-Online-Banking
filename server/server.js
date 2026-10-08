@@ -19,7 +19,7 @@ const startServer = async () => {
 
     const server = app.listen(PORT, () => {
       logger.info(`=======================================================`);
-      logger.info(` Aegis Secure Online Banking API Server running on port ${PORT}`);
+      logger.info(` Suraksha Digital Banking API Server running on port ${PORT}`);
       logger.info(` Environment: ${process.env.NODE_ENV || 'development'}`);
       logger.info(` API Health:  http://localhost:${PORT}/api/health`);
       logger.info(`=======================================================`);

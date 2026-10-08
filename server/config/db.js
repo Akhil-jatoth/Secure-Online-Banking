@@ -1,11 +1,27 @@
 import mongoose from 'mongoose';
+import dns from 'dns';
 import { logger } from './logger.js';
 
 let mongodInstance = null;
 
 export const connectDB = async () => {
   try {
-    const mongoUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/secure_banking_db';
+    const rawUri = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/secure_banking_db';
+    let mongoUri = rawUri.trim();
+
+    // If srv URI, configure public DNS servers for Windows compatibility
+    if (mongoUri.startsWith('mongodb+srv://')) {
+      try {
+        dns.setServers(['8.8.8.8', '1.1.1.1']);
+      } catch {
+        // Ignore DNS config errors
+      }
+      if (!mongoUri.includes('?') && !mongoUri.endsWith('/')) {
+        mongoUri += '/secure_banking_db?retryWrites=true&w=majority';
+      } else if (mongoUri.endsWith('/')) {
+        mongoUri += 'secure_banking_db?retryWrites=true&w=majority';
+      }
+    }
 
     // In test environment or if forced, use memory server
     if (process.env.NODE_ENV === 'test') {
@@ -18,9 +34,8 @@ export const connectDB = async () => {
     }
 
     try {
-      // Attempt connection to specified Mongo URI with 3 second timeout
       const conn = await mongoose.connect(mongoUri, {
-        serverSelectionTimeoutMS: 3000,
+        serverSelectionTimeoutMS: 10000,
       });
       logger.info(`MongoDB Connected successfully to: ${conn.connection.host}/${conn.connection.name}`);
     } catch (primaryErr) {

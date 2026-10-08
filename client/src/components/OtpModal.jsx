@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Modal } from './Modal.jsx';
 import { ShieldCheck, RefreshCw, KeyRound, Sparkles } from 'lucide-react';
 import { authService } from '../services/authService.js';
+import { useAuth } from '../context/AuthContext.jsx';
 import { useToast } from '../context/ToastContext.jsx';
 
 export const OtpModal = ({
@@ -19,6 +20,7 @@ export const OtpModal = ({
   const [isResending, setIsResending] = useState(false);
   const [activeDemoCode, setActiveDemoCode] = useState(demoCode);
   const inputRefs = useRef([]);
+  const { user } = useAuth();
   const toast = useToast();
 
   useEffect(() => {
@@ -79,7 +81,7 @@ export const OtpModal = ({
   const handleResend = async () => {
     try {
       setIsResending(true);
-      const res = await authService.requestOTP({ purpose });
+      const res = await authService.requestOTP({ purpose, email: user?.email });
       if (res.success) {
         setTimeLeft(300);
         if (res.data?.demoCode) {
@@ -120,23 +122,6 @@ export const OtpModal = ({
         <p className="text-sm text-center text-slate-600 dark:text-slate-300 mb-5 leading-relaxed">
           {description}
         </p>
-
-        {/* Academic Simulation Banner & Autofill Helper */}
-        {activeDemoCode && (
-          <div className="w-full mb-6 p-3 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 rounded-xl flex items-center justify-between">
-            <div className="flex items-center space-x-2 text-xs text-amber-800 dark:text-amber-300 font-medium">
-              <Sparkles className="w-4 h-4 text-amber-600 flex-shrink-0" />
-              <span>Academic Demo OTP: <strong className="font-mono text-sm tracking-wider">{activeDemoCode}</strong></span>
-            </div>
-            <button
-              type="button"
-              onClick={fillDemoCode}
-              className="text-xs px-2.5 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-semibold transition-colors shadow-sm"
-            >
-              Auto-Fill
-            </button>
-          </div>
-        )}
 
         {/* 6-Digit Inputs */}
         <div className="flex justify-center space-x-2.5 mb-6" onPaste={handlePaste}>

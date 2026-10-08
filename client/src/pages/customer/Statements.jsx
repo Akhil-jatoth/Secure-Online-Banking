@@ -201,20 +201,23 @@ export const Statements = () => {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-slate-100 dark:border-slate-800 gap-4">
             <div>
               <div className="flex items-center space-x-2">
-                <span className="text-xl font-black text-bank-700 dark:text-bank-400">AEGIS BANK</span>
-                <span className="text-[10px] px-2 py-0.5 rounded bg-bank-50 dark:bg-bank-950 text-bank-600 font-bold uppercase">
+                <span className="text-xl font-black text-sky-700 dark:text-sky-400">SURAKSHA BANK</span>
+                <span className="text-[10px] px-2 py-0.5 rounded bg-sky-50 dark:bg-sky-950 text-sky-600 font-bold uppercase">
                   Official Statement
                 </span>
               </div>
               <p className="text-xs text-slate-500 mt-1">
-                Statement Period: <strong className="text-slate-900 dark:text-white">{statementData.period}</strong>
+                Branch: <strong className="text-slate-800 dark:text-slate-200">Nariman Point Mumbai (IFSC: SURB0001008)</strong>
+              </p>
+              <p className="text-xs text-slate-500">
+                Period: <strong className="text-slate-900 dark:text-white">{statementData.period}</strong>
               </p>
             </div>
 
             <div className="text-left sm:text-right text-xs">
               <p className="font-bold text-slate-900 dark:text-white">{statementData.customerName}</p>
-              <p className="font-mono text-slate-500">Account: {statementData.maskedAccountNumber}</p>
-              <p className="text-slate-400 text-[11px]">Type: {statementData.accountType} Deposit</p>
+              <p className="font-mono text-slate-500">A/C No: {statementData.maskedAccountNumber}</p>
+              <p className="text-slate-400 text-[11px]">Type: {statementData.accountType} Deposit (INR ₹)</p>
             </div>
           </div>
 

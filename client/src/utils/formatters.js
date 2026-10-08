@@ -1,6 +1,6 @@
-export const formatCurrency = (amount, currency = 'USD') => {
+export const formatCurrency = (amount, currency = 'INR') => {
   const num = typeof amount === 'number' ? amount : parseFloat(amount || 0);
-  return new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat('en-IN', {
     style: 'currency',
     currency,
     minimumFractionDigits: 2,
@@ -21,13 +21,13 @@ export const formatDate = (dateString, options = {}) => {
     minute: '2-digit',
   };
 
-  return new Intl.DateTimeFormat('en-US', { ...defaultOptions, ...options }).format(date);
+  return new Intl.DateTimeFormat('en-IN', { ...defaultOptions, ...options }).format(date);
 };
 
 export const formatShortDate = (dateString) => {
   if (!dateString) return 'N/A';
   const date = new Date(dateString);
-  return new Intl.DateTimeFormat('en-US', {
+  return new Intl.DateTimeFormat('en-IN', {
     month: 'short',
     day: 'numeric',
     year: 'numeric',

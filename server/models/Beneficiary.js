@@ -27,13 +27,13 @@ const beneficiarySchema = new mongoose.Schema(
       type: String,
       required: [true, 'Bank name is required'],
       trim: true,
-      default: 'Aegis Bank',
+      default: 'Suraksha Bank',
     },
     routingNumber: {
       type: String,
       required: [true, 'Routing / IFSC number is required'],
       trim: true,
-      default: 'AEGIS0018',
+      default: 'SURB0001008',
     },
     status: {
       type: String,

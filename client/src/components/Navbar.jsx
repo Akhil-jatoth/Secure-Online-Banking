@@ -61,20 +61,20 @@ export const Navbar = ({ onToggleMobileMenu }) => {
           </button>
 
           <Link to={isAdmin ? '/admin' : '/dashboard'} className="flex items-center space-x-3 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-bank-700 via-bank-600 to-bank-500 flex items-center justify-center text-white shadow-glow group-hover:scale-105 transition-transform">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 via-sky-500 to-sky-400 flex items-center justify-center text-white shadow-md shadow-sky-500/25 group-hover:scale-105 transition-transform">
               <Shield className="w-6 h-6" />
             </div>
             <div>
-              <div className="flex items-center space-x-2">
-                <span className="font-extrabold text-lg tracking-tight text-slate-900 dark:text-white">
-                  AEGIS
+              <div className="flex items-center space-x-1.5">
+                <span className="font-black text-lg tracking-tight text-slate-900 dark:text-white">
+                  SURAKSHA
                 </span>
-                <span className="text-xs font-semibold px-2 py-0.5 rounded-md bg-bank-100 text-bank-700 dark:bg-bank-950 dark:text-bank-300 uppercase tracking-widest border border-bank-200 dark:border-bank-800">
-                  {isAdmin ? 'ADMIN' : 'BANK'}
+                <span className="text-[11px] font-extrabold px-2 py-0.5 rounded-md bg-sky-100 text-sky-700 dark:bg-sky-950 dark:text-sky-300 uppercase tracking-widest border border-sky-200 dark:border-sky-800">
+                  {isAdmin ? 'OFFICER' : 'BANK'}
                 </span>
               </div>
-              <p className="text-[10px] text-slate-400 font-medium tracking-wide -mt-0.5">
-                SECURE ONLINE BANKING
+              <p className="text-[10px] text-sky-600 dark:text-sky-400 font-semibold tracking-wide -mt-0.5">
+                DIGITAL BANKING PORTAL
               </p>
             </div>
           </Link>
@@ -83,9 +83,9 @@ export const Navbar = ({ onToggleMobileMenu }) => {
         {/* Right: Security Badge, Theme, Notifications & User */}
         <div className="flex items-center space-x-2 sm:space-x-4">
           {/* Security Status Indicator */}
-          <div className="hidden md:flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 text-xs font-medium">
+          <div className="hidden md:flex items-center space-x-1.5 px-3 py-1 rounded-full bg-sky-50 dark:bg-sky-950/60 border border-sky-200 dark:border-sky-800 text-sky-700 dark:text-sky-300 text-xs font-semibold">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-            <span>256-Bit SSL Encrypted</span>
+            <span>256-Bit SSL Encrypted • IMPS Ready</span>
           </div>
 
           {/* Theme Toggle */}

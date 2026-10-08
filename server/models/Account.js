@@ -34,7 +34,7 @@ const accountSchema = new mongoose.Schema(
     },
     currency: {
       type: String,
-      default: 'USD',
+      default: 'INR',
       uppercase: true,
     },
     status: {
@@ -45,7 +45,7 @@ const accountSchema = new mongoose.Schema(
     },
     dailyTransferLimit: {
       type: Number,
-      default: 10000,
+      default: 200000,
     },
   },
   {

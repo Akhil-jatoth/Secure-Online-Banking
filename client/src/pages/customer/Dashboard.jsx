@@ -55,17 +55,17 @@ export const Dashboard = () => {
   return (
     <div className="space-y-8">
       {/* Welcome Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-bank-900 via-navy-900 to-slate-900 p-6 sm:p-8 rounded-3xl text-white shadow-xl relative overflow-hidden border border-bank-700/30">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-gradient-to-r from-sky-900 via-sky-800 to-slate-900 p-6 sm:p-8 rounded-3xl text-white shadow-xl relative overflow-hidden border border-sky-600/30">
         <div className="relative z-10">
-          <div className="flex items-center space-x-2 text-bank-300 text-xs font-semibold uppercase tracking-wider mb-1">
+          <div className="flex items-center space-x-2 text-sky-300 text-xs font-bold uppercase tracking-wider mb-1">
             <ShieldCheck className="w-4 h-4 text-emerald-400" />
-            <span>Secure Customer Portal • Active Session</span>
+            <span>Suraksha NetBanking • Verified Active Session</span>
           </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-            Welcome back, {user?.fullName || 'Valued Customer'}
+          <h1 className="text-2xl sm:text-3xl font-black tracking-tight">
+            Namaste, {user?.fullName || 'Valued Customer'}
           </h1>
-          <p className="text-xs text-slate-300 mt-1 max-w-xl">
-            Customer ID: <span className="font-mono text-white font-semibold">{user?.customerId}</span> • Last Login: {user?.lastLoginAt ? new Date(user.lastLoginAt).toLocaleString() : 'Just now'}
+          <p className="text-xs text-sky-100/90 mt-1 max-w-xl">
+            Customer ID: <span className="font-mono text-white font-bold">{user?.customerId}</span> • Branch: Nariman Point, Mumbai • Last Login: {user?.lastLoginAt ? new Date(user.lastLoginAt).toLocaleString('en-IN') : 'Just now'}
           </p>
         </div>
 
@@ -73,22 +73,22 @@ export const Dashboard = () => {
         <div className="relative z-10 flex flex-wrap items-center gap-2.5">
           <Link
             to="/transfer"
-            className="px-4 py-2.5 rounded-xl bg-bank-500 hover:bg-bank-400 text-white text-xs font-bold shadow-lg shadow-bank-500/30 transition-all flex items-center space-x-1.5"
+            className="px-4 py-2.5 rounded-xl bg-sky-500 hover:bg-sky-400 text-white text-xs font-bold shadow-lg shadow-sky-500/30 transition-all flex items-center space-x-1.5"
           >
             <ArrowLeftRight className="w-4 h-4" />
-            <span>Transfer Funds</span>
+            <span>IMPS / UPI Transfer</span>
           </Link>
           <Link
             to="/bills"
             className="px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold border border-white/20 backdrop-blur-sm transition-all flex items-center space-x-1.5"
           >
             <Receipt className="w-4 h-4" />
-            <span>Pay Bills</span>
+            <span>Pay Indian Bills</span>
           </Link>
         </div>
 
         {/* Decorative Background Circles */}
-        <div className="absolute right-0 top-0 w-96 h-96 bg-bank-500/10 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
+        <div className="absolute right-0 top-0 w-96 h-96 bg-sky-400/15 rounded-full blur-3xl pointer-events-none -mr-20 -mt-20"></div>
       </div>
 
       {/* Metrics Row */}
@@ -99,18 +99,18 @@ export const Dashboard = () => {
           subtitle={`${accounts.length} Active Accounts`}
           icon={Wallet}
           variant="primary"
-          trend="+4.2% this month"
+          trend="+5.8% this month"
           trendPositive={true}
         />
 
         <StatCard
           title="Primary Savings Account"
-          value={primaryAccount ? formatCurrency(primaryAccount.availableBalance) : '$0.00'}
+          value={primaryAccount ? formatCurrency(primaryAccount.availableBalance) : '₹0.00'}
           subtitle={primaryAccount ? maskAccountNumber(primaryAccount.accountNumber) : 'No account'}
           icon={CreditCard}
           variant="default"
           actionButton={
-            <Link to="/accounts" className="text-xs font-semibold text-bank-600 dark:text-bank-400 hover:underline">
+            <Link to="/accounts" className="text-xs font-semibold text-sky-600 dark:text-sky-400 hover:underline">
               View Details →
             </Link>
           }
@@ -119,7 +119,7 @@ export const Dashboard = () => {
         <StatCard
           title="Security & 2FA Health"
           value="100% Protected"
-          subtitle="OTP Enabled on Transfers"
+          subtitle="OTP & 256-Bit SSL Active"
           icon={ShieldCheck}
           variant="dark"
           trend="Secured"

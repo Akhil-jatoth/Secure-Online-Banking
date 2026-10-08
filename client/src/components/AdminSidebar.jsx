@@ -19,15 +19,15 @@ export const AdminSidebar = ({ isMobileOpen, onCloseMobile }) => {
 
   const sidebarContent = (
     <div className="flex flex-col h-full py-6 px-4">
-      <div className="mb-6 px-3.5 py-3 rounded-xl bg-gradient-to-r from-purple-950/60 to-slate-900 border border-purple-800/40 text-left">
+      <div className="mb-6 px-3.5 py-3 rounded-xl bg-gradient-to-r from-sky-950 via-slate-900 to-indigo-950 border border-sky-800/40 text-left shadow-sm">
         <div className="flex items-center space-x-2">
-          <ShieldCheck className="w-4 h-4 text-purple-400 flex-shrink-0" />
-          <span className="text-xs font-extrabold text-purple-200 tracking-wider uppercase">
-            Admin Console
+          <ShieldCheck className="w-4 h-4 text-sky-400 flex-shrink-0" />
+          <span className="text-xs font-extrabold text-sky-200 tracking-wider uppercase">
+            Bank Officer Portal
           </span>
         </div>
         <p className="text-[11px] text-slate-400 mt-1 leading-tight">
-          Privileged System Oversight
+          Suraksha Core Banking Oversight
         </p>
       </div>
 
@@ -43,7 +43,7 @@ export const AdminSidebar = ({ isMobileOpen, onCloseMobile }) => {
               className={({ isActive }) =>
                 `flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all ${
                   isActive
-                    ? 'bg-purple-700 text-white shadow-md shadow-purple-900/30 font-semibold'
+                    ? 'bg-gradient-to-r from-sky-600 to-blue-600 text-white shadow-md shadow-sky-900/30 font-semibold'
                     : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800/60'
                 }`
               }
@@ -56,12 +56,12 @@ export const AdminSidebar = ({ isMobileOpen, onCloseMobile }) => {
       </nav>
 
       <div className="mt-auto pt-4 border-t border-slate-200/60 dark:border-slate-800/60">
-        <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900/50 text-center">
-          <p className="text-[11px] font-bold text-rose-800 dark:text-rose-300">
+        <div className="p-3 rounded-xl bg-sky-50 dark:bg-sky-950/30 border border-sky-200 dark:border-sky-900/50 text-center">
+          <p className="text-[11px] font-bold text-sky-900 dark:text-sky-300">
             Immutable Audit Trail
           </p>
-          <p className="text-[10px] text-rose-600/80 dark:text-rose-400/80 mt-0.5">
-            All actions logged permanently
+          <p className="text-[10px] text-sky-600 dark:text-sky-400 mt-0.5">
+            RBI & ISO 27001 Certified
           </p>
         </div>
       </div>

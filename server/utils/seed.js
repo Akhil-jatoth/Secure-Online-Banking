@@ -34,52 +34,52 @@ export const seedDatabase = async () => {
       fullName: 'System Security Administrator',
       email: 'admin@securebank.test',
       password: 'Admin@12345!', // hashed by pre-save hook
-      phoneNumber: '+1-800-555-0199',
+      phoneNumber: '+91 98001 00099',
       dateOfBirth: new Date('1985-05-15'),
       address: {
-        street: '100 Cyber Defense Blvd',
-        city: 'New York',
-        state: 'NY',
-        postalCode: '10001',
-        country: 'USA',
+        street: '100 Cyber Tower, Nariman Point',
+        city: 'Mumbai',
+        state: 'Maharashtra',
+        postalCode: '400021',
+        country: 'India',
       },
       role: ROLES.ADMIN,
     });
     await admin.save();
 
-    // 2. Create Customer 1 (Alexander Wright)
+    // 2. Create Customer 1 (Aarav Sharma)
     const customer1 = new User({
       customerId: 'CUST-882910',
-      fullName: 'Alexander Wright',
+      fullName: 'Aarav Sharma',
       email: 'customer1@securebank.test',
       password: 'Password@12345!',
-      phoneNumber: '+1-212-555-0142',
+      phoneNumber: '+91 98765 43210',
       dateOfBirth: new Date('1992-08-24'),
       address: {
-        street: '450 Lexington Ave, Apt 12B',
-        city: 'New York',
-        state: 'NY',
-        postalCode: '10017',
-        country: 'USA',
+        street: 'Flat 402, Shanti Heights, MG Road',
+        city: 'Bengaluru',
+        state: 'Karnataka',
+        postalCode: '560001',
+        country: 'India',
       },
       role: ROLES.CUSTOMER,
     });
     await customer1.save();
 
-    // 3. Create Customer 2 (Elena Rostova)
+    // 3. Create Customer 2 (Priya Patel)
     const customer2 = new User({
       customerId: 'CUST-773412',
-      fullName: 'Elena Rostova',
+      fullName: 'Priya Patel',
       email: 'customer2@securebank.test',
       password: 'Password@12345!',
-      phoneNumber: '+1-415-555-0188',
+      phoneNumber: '+91 98123 45678',
       dateOfBirth: new Date('1994-11-03'),
       address: {
-        street: '88 Montgomery St, Suite 400',
-        city: 'San Francisco',
-        state: 'CA',
-        postalCode: '94104',
-        country: 'USA',
+        street: '12, Marine Drive, Churchgate',
+        city: 'Mumbai',
+        state: 'Maharashtra',
+        postalCode: '400020',
+        country: 'India',
       },
       role: ROLES.CUSTOMER,
     });
@@ -90,9 +90,9 @@ export const seedDatabase = async () => {
       accountNumber: '100982347101',
       user: customer1._id,
       accountType: ACCOUNT_TYPES.SAVINGS,
-      balance: 14850.50,
-      availableBalance: 14850.50,
-      currency: 'USD',
+      balance: 148500.50,
+      availableBalance: 148500.50,
+      currency: 'INR',
       status: ACCOUNT_STATUS.ACTIVE,
     });
 
@@ -100,9 +100,9 @@ export const seedDatabase = async () => {
       accountNumber: '100982347102',
       user: customer1._id,
       accountType: ACCOUNT_TYPES.CURRENT,
-      balance: 3200.00,
-      availableBalance: 3200.00,
-      currency: 'USD',
+      balance: 32000.00,
+      availableBalance: 32000.00,
+      currency: 'INR',
       status: ACCOUNT_STATUS.ACTIVE,
     });
 
@@ -110,108 +110,108 @@ export const seedDatabase = async () => {
       accountNumber: '100871928301',
       user: customer2._id,
       accountType: ACCOUNT_TYPES.SAVINGS,
-      balance: 8900.00,
-      availableBalance: 8900.00,
-      currency: 'USD',
+      balance: 89000.00,
+      availableBalance: 89000.00,
+      currency: 'INR',
       status: ACCOUNT_STATUS.ACTIVE,
     });
 
     // 5. Create Beneficiaries for Customer 1
     const ben1 = await Beneficiary.create({
       user: customer1._id,
-      name: 'Elena Rostova',
-      nickname: 'Elena (Colleague)',
+      name: 'Priya Patel',
+      nickname: 'Priya (ICICI)',
       accountNumber: cust2Savings.accountNumber,
-      bankName: 'Aegis Bank',
-      routingNumber: 'AEGIS0018',
+      bankName: 'ICICI Bank',
+      routingNumber: 'ICIC0000001',
       status: 'ACTIVE',
     });
 
     const ben2 = await Beneficiary.create({
       user: customer1._id,
-      name: 'Marcus Vance',
-      nickname: 'Marcus Landlord',
+      name: 'Vikram Rao',
+      nickname: 'Vikram Landlord',
       accountNumber: '100554433221',
-      bankName: 'Apex Trust Bank',
-      routingNumber: 'APEX9901',
+      bankName: 'State Bank of India (SBI)',
+      routingNumber: 'SBIN0001008',
       status: 'ACTIVE',
     });
 
     // Beneficiary for Customer 2
     await Beneficiary.create({
       user: customer2._id,
-      name: 'Alexander Wright',
-      nickname: 'Alex Wright',
+      name: 'Aarav Sharma',
+      nickname: 'Aarav (Suraksha)',
       accountNumber: cust1Savings.accountNumber,
-      bankName: 'Aegis Bank',
-      routingNumber: 'AEGIS0018',
+      bankName: 'Suraksha Bank',
+      routingNumber: 'SURB0001008',
       status: 'ACTIVE',
     });
 
     // 6. Create Realistic Transactions
     const tx1 = await Transaction.create({
       transactionId: 'TXN-SEED-001',
-      referenceNumber: 'REF-9812401',
+      referenceNumber: 'UTR-981240192',
       type: TRANSACTION_TYPES.DEPOSIT,
       receiverAccount: cust1Savings._id,
       receiverUser: customer1._id,
-      amount: 10000.00,
-      currency: 'USD',
-      description: 'Payroll Direct Deposit - Tech Corp Inc',
+      amount: 100000.00,
+      currency: 'INR',
+      description: 'Monthly Salary Credit - Infosys Ltd',
       category: 'Salary',
       status: TRANSACTION_STATUS.SUCCESS,
-      balanceAfterReceiver: 16500.50,
+      balanceAfterReceiver: 165000.50,
       completedAt: new Date(Date.now() - 15 * 86400000),
       createdAt: new Date(Date.now() - 15 * 86400000),
     });
 
     const tx2 = await Transaction.create({
       transactionId: 'TXN-SEED-002',
-      referenceNumber: 'REF-9812402',
+      referenceNumber: 'IMPS-981240283',
       type: TRANSACTION_TYPES.TRANSFER,
       senderAccount: cust1Savings._id,
       receiverAccount: cust2Savings._id,
       senderUser: customer1._id,
       receiverUser: customer2._id,
-      amount: 650.00,
-      currency: 'USD',
-      description: 'Project consultation fee payment',
+      amount: 6500.00,
+      currency: 'INR',
+      description: 'Consultation fee remittance',
       category: 'Transfer',
       status: TRANSACTION_STATUS.SUCCESS,
-      balanceAfterSender: 15850.50,
-      balanceAfterReceiver: 8900.00,
+      balanceAfterSender: 158500.50,
+      balanceAfterReceiver: 89000.00,
       completedAt: new Date(Date.now() - 5 * 86400000),
       createdAt: new Date(Date.now() - 5 * 86400000),
     });
 
     const tx3 = await Transaction.create({
       transactionId: 'TXN-SEED-003',
-      referenceNumber: 'REF-9812403',
+      referenceNumber: 'BBPS-981240312',
       type: TRANSACTION_TYPES.BILL_PAYMENT,
       senderAccount: cust1Savings._id,
       senderUser: customer1._id,
-      amount: 145.20,
-      currency: 'USD',
-      description: 'Internet Bill: Gigabit Fiber Net',
+      amount: 1450.00,
+      currency: 'INR',
+      description: 'Fiber Bill: JioFiber Broadband',
       category: 'Internet',
       status: TRANSACTION_STATUS.SUCCESS,
-      balanceAfterSender: 15705.30,
+      balanceAfterSender: 157050.50,
       completedAt: new Date(Date.now() - 2 * 86400000),
       createdAt: new Date(Date.now() - 2 * 86400000),
     });
 
     const tx4 = await Transaction.create({
       transactionId: 'TXN-SEED-004',
-      referenceNumber: 'REF-9812404',
+      referenceNumber: 'BBPS-981240455',
       type: TRANSACTION_TYPES.BILL_PAYMENT,
       senderAccount: cust1Savings._id,
       senderUser: customer1._id,
-      amount: 854.80,
-      currency: 'USD',
-      description: 'Electricity & Utilities: Metropolis Power',
+      amount: 8550.00,
+      currency: 'INR',
+      description: 'Electricity Bill: BESCOM Bengaluru',
       category: 'Electricity',
       status: TRANSACTION_STATUS.SUCCESS,
-      balanceAfterSender: 14850.50,
+      balanceAfterSender: 148500.50,
       completedAt: new Date(Date.now() - 1 * 86400000),
       createdAt: new Date(Date.now() - 1 * 86400000),
     });
@@ -222,10 +222,10 @@ export const seedDatabase = async () => {
       account: cust1Savings._id,
       transaction: tx3._id,
       category: BILL_CATEGORIES.INTERNET,
-      billerName: 'Gigabit Fiber Net',
-      consumerNumber: 'INET-992014',
-      amount: 145.20,
-      paymentReference: 'PAYREF-982141',
+      billerName: 'JioFiber Broadband',
+      consumerNumber: 'JIO-99201488',
+      amount: 1450.00,
+      paymentReference: 'BBPS-982141',
       status: 'SUCCESS',
       createdAt: new Date(Date.now() - 2 * 86400000),
     });
@@ -235,10 +235,10 @@ export const seedDatabase = async () => {
       account: cust1Savings._id,
       transaction: tx4._id,
       category: BILL_CATEGORIES.ELECTRICITY,
-      billerName: 'Metropolis Power & Light',
-      consumerNumber: 'ELEC-440192',
-      amount: 854.80,
-      paymentReference: 'PAYREF-982142',
+      billerName: 'BESCOM - Bengaluru Electricity',
+      consumerNumber: 'BES-44019283',
+      amount: 8550.00,
+      paymentReference: 'BBPS-982142',
       status: 'SUCCESS',
       createdAt: new Date(Date.now() - 1 * 86400000),
     });
@@ -247,32 +247,32 @@ export const seedDatabase = async () => {
     await Notification.create([
       {
         user: customer1._id,
-        title: 'Welcome to Aegis Secure Bank',
-        message: 'Your account #100982347101 is configured and protected by multi-factor authentication.',
+        title: 'Welcome to Suraksha Digital Bank',
+        message: 'Your savings account #100982347101 is activated. IFSC: SURB0001008, Nariman Point Mumbai Branch.',
         type: 'ACCOUNT',
         isRead: true,
         createdAt: new Date(Date.now() - 20 * 86400000),
       },
       {
         user: customer1._id,
-        title: 'Security Notice: New Beneficiary Added',
-        message: 'Beneficiary "Elena Rostova" (#100871928301) was successfully authorized via MFA.',
+        title: 'Security Notice: Beneficiary Added',
+        message: 'Beneficiary "Priya Patel" (#100871928301 - ICICI Bank) was successfully verified via OTP.',
         type: 'SECURITY',
         isRead: false,
         createdAt: new Date(Date.now() - 6 * 86400000),
       },
       {
         user: customer1._id,
-        title: 'Transfer Completed',
-        message: 'Your transfer of $650.00 to Elena Rostova was completed successfully.',
+        title: 'IMPS Transfer Completed',
+        message: 'Your instant IMPS remittance of Rs. 6,500.00 to Priya Patel was successful. Ref: IMPS-981240283.',
         type: 'TRANSACTION',
         isRead: false,
         createdAt: new Date(Date.now() - 5 * 86400000),
       },
       {
         user: customer2._id,
-        title: 'Funds Received',
-        message: 'Received $650.00 from Alexander Wright into account #100871928301.',
+        title: 'IMPS Funds Inward Credit',
+        message: 'Received Rs. 6,500.00 from Aarav Sharma into account #100871928301.',
         type: 'TRANSACTION',
         isRead: false,
         createdAt: new Date(Date.now() - 5 * 86400000),
@@ -329,12 +329,12 @@ export const seedDatabase = async () => {
       },
     ]);
 
-    logger.info('Database seeded successfully with demo and admin accounts!');
+    logger.info('Database seeded successfully with Indian demo customers and admin officer!');
     logger.info('----------------------------------------------------');
-    logger.info('DEMO ACCOUNTS FOR ACADEMIC EVALUATION:');
-    logger.info('Admin:     admin@securebank.test     | Password: Admin@12345!');
-    logger.info('Customer1: customer1@securebank.test | Password: Password@12345!');
-    logger.info('Customer2: customer2@securebank.test | Password: Password@12345!');
+    logger.info('SURAKSHA BANK DEMO ACCOUNTS FOR EVALUATION:');
+    logger.info('Admin Officer: admin@securebank.test | Password: Admin@12345!');
+    logger.info('Customer 1:    customer1@securebank.test | Password: Password@12345! (Aarav Sharma - Rs. 1,48,500.50)');
+    logger.info('Customer 2:    customer2@securebank.test | Password: Password@12345! (Priya Patel - Rs. 89,000.00)');
     logger.info('----------------------------------------------------');
   } catch (error) {
     logger.error(`Seed database failed: ${error.message}`);

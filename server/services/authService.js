@@ -45,7 +45,7 @@ export class AuthService {
 
     // Automatically create primary Savings account with simulated initial balance
     const accountNumber = `100${Date.now().toString().slice(-7)}${Math.floor(10 + Math.random() * 90)}`;
-    const initialWelcomeBalance = 2500.00;
+    const initialWelcomeBalance = 25000.00;
 
     const account = await Account.create({
       accountNumber,
@@ -53,7 +53,7 @@ export class AuthService {
       accountType: ACCOUNT_TYPES.SAVINGS,
       balance: initialWelcomeBalance,
       availableBalance: initialWelcomeBalance,
-      currency: 'USD',
+      currency: 'INR',
       status: ACCOUNT_STATUS.ACTIVE,
     });
 
@@ -74,8 +74,8 @@ export class AuthService {
     // Send Welcome Notification
     await NotificationService.create({
       userId: user._id,
-      title: 'Welcome to Aegis Secure Bank',
-      message: `Your account #${accountNumber} is active with an opening balance of $${initialWelcomeBalance.toFixed(2)}.`,
+      title: 'Welcome to Suraksha Digital Bank',
+      message: `Your account #${accountNumber} is active with an opening balance of Rs. ${initialWelcomeBalance.toLocaleString('en-IN', { minimumFractionDigits: 2 })}.`,
       type: 'ACCOUNT',
     });
 
@@ -101,7 +101,7 @@ export class AuthService {
     };
   }
 
-  static async login({ email, password }, ipAddress, userAgent) {
+  static async login({ email, password, otp }, ipAddress, userAgent) {
     const normalizedEmail = email.toLowerCase().trim();
     const user = await User.findOne({ email: normalizedEmail }).select('+password');
 
@@ -173,6 +173,36 @@ export class AuthService {
       }
 
       throw new Error('Invalid email or password credentials.');
+    }
+
+    // 2-Step Login Check: If OTP is not provided, send OTP via Brevo and return challenge
+    if (!otp) {
+      const otpData = await OTPService.generateOTP({
+        userId: user._id,
+        email: user.email,
+        fullName: user.fullName,
+        purpose: OTP_PURPOSES.LOGIN,
+      });
+
+      return {
+        requiresOtp: true,
+        email: user.email,
+        role: user.role,
+        fullName: user.fullName,
+        message: `Security OTP sent to registered email ${user.email}.`,
+      };
+    }
+
+    // Verify Login OTP
+    const otpResult = await OTPService.verifyOTP({
+      userId: user._id,
+      email: user.email,
+      purpose: OTP_PURPOSES.LOGIN,
+      otp,
+    });
+
+    if (!otpResult.isValid) {
+      throw new Error(otpResult.message || 'Invalid or expired OTP code.');
     }
 
     // Successful login: reset attempts and record last login
@@ -291,7 +321,6 @@ export class AuthService {
     return {
       success: true,
       message: 'If the email is registered, a password reset OTP has been sent.',
-      demoCode: otpData.demoCode,
     };
   }
 

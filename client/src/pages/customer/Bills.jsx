@@ -225,19 +225,19 @@ export const Bills = () => {
               {/* Amount */}
               <div>
                 <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1.5">
-                  Bill Amount (USD)
+                  Bill Amount (₹ INR)
                 </label>
                 <div className="relative">
-                  <DollarSign className="w-4 h-4 text-slate-400 absolute left-3 top-3 pointer-events-none" />
+                  <span className="text-sm font-bold text-slate-400 absolute left-3 top-2.5 pointer-events-none">₹</span>
                   <input
                     type="number"
-                    step="0.01"
-                    min="0.01"
+                    step="1"
+                    min="1"
                     required
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
-                    placeholder="0.00"
-                    className="w-full pl-9 pr-3.5 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-bank-500"
+                    placeholder="1200"
+                    className="w-full pl-8 pr-3.5 py-2.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-bank-500"
                   />
                 </div>
               </div>
@@ -253,7 +253,7 @@ export const Bills = () => {
                   <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                 ) : (
                   <>
-                    <span>Confirm & Pay Bill Now</span>
+                    <span>Pay Indian Utility Bill Now</span>
                     <ArrowRight className="w-4 h-4" />
                   </>
                 )}
@@ -265,23 +265,23 @@ export const Bills = () => {
         {/* Right: Payment Tips & Summary Card */}
         <div className="space-y-6">
           <div className="glass-panel p-6 rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm">
-            <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-2">Simulated Auto-Biller</h3>
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white mb-2">BBPS Bharat Bill Payment</h3>
             <p className="text-xs text-slate-500 leading-relaxed">
-              Payments are executed atomically against your account ledger with automated instant receipt generation.
+              Instant bill validation & direct debit integration with Indian State Electricity Boards, Municipalities and Telcos.
             </p>
 
             <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 space-y-2 text-xs">
               <div className="flex justify-between">
-                <span className="text-slate-500">Convenience Fee:</span>
-                <strong className="text-emerald-600">$0.00</strong>
+                <span className="text-slate-500">BBPS Convenience Fee:</span>
+                <strong className="text-emerald-600">₹0.00 (Free)</strong>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-500">Settlement Time:</span>
-                <strong className="text-slate-900 dark:text-white">Instant (0s)</strong>
+                <strong className="text-slate-900 dark:text-white">Real-Time (Instant)</strong>
               </div>
               <div className="flex justify-between">
                 <span className="text-slate-500">Receipt Type:</span>
-                <strong className="text-slate-900 dark:text-white">Electronic Certified</strong>
+                <strong className="text-slate-900 dark:text-white">Certified GST Compliant</strong>
               </div>
             </div>
           </div>

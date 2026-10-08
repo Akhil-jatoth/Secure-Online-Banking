@@ -63,6 +63,7 @@ export class AuthController {
       const { purpose, email } = req.body;
       const targetUserId = req.user ? req.user._id : null;
       const targetEmail = req.user ? req.user.email : email;
+      const targetFullName = req.user ? req.user.fullName : 'Customer';
 
       if (!targetEmail && !targetUserId) {
         return ApiResponse.badRequest(res, 'Email or authenticated session required to send OTP.');
@@ -72,12 +73,12 @@ export class AuthController {
       const result = await OTPService.generateOTP({
         userId: targetUserId,
         email: targetEmail,
+        fullName: targetFullName,
         purpose: validPurpose,
       });
 
       return ApiResponse.success(res, result.message, {
         expiresAt: result.expiresAt,
-        demoCode: result.demoCode,
       });
     } catch (error) {
       return ApiResponse.badRequest(res, error.message);
@@ -127,7 +128,7 @@ export class AuthController {
       const userAgent = req.headers['user-agent'] || 'Unknown';
 
       const result = await AuthService.forgotPassword(req.body, ipAddress, userAgent);
-      return ApiResponse.success(res, result.message, { demoCode: result.demoCode });
+      return ApiResponse.success(res, result.message);
     } catch (error) {
       return ApiResponse.badRequest(res, error.message);
     }

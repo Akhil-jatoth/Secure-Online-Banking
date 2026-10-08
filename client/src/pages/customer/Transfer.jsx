@@ -3,6 +3,7 @@ import { accountService } from '../../services/accountService.js';
 import { beneficiaryService } from '../../services/beneficiaryService.js';
 import { transactionService } from '../../services/transactionService.js';
 import { authService } from '../../services/authService.js';
+import { useAuth } from '../../context/AuthContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { OtpModal } from '../../components/OtpModal.jsx';
 import { Modal } from '../../components/Modal.jsx';
@@ -37,6 +38,7 @@ export const Transfer = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successReceipt, setSuccessReceipt] = useState(null);
 
+  const { user } = useAuth();
   const toast = useToast();
 
   useEffect(() => {
@@ -107,12 +109,11 @@ export const Transfer = () => {
   const handleProceedToOtp = async () => {
     try {
       setIsSubmitting(true);
-      const res = await authService.requestOTP({ purpose: 'TRANSFER' });
+      const res = await authService.requestOTP({ purpose: 'TRANSFER', email: user?.email });
       if (res.success) {
-        setDemoOtp(res.data?.demoCode || null);
         setIsReviewOpen(false);
         setIsOtpOpen(true);
-        toast.info(res.message || 'Verification code sent.');
+        toast.success(`Security OTP sent to your registered email (${user?.email || 'your email'}). Please check your inbox.`);
       }
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to generate transfer OTP.');
@@ -287,19 +288,19 @@ export const Transfer = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
-                3. Transfer Amount (USD)
+                3. Transfer Amount (₹ INR)
               </label>
               <div className="relative">
-                <DollarSign className="w-5 h-5 text-slate-400 absolute left-3.5 top-3.5 pointer-events-none" />
+                <span className="text-base font-bold text-slate-400 absolute left-3.5 top-3 pointer-events-none">₹</span>
                 <input
                   type="number"
-                  step="0.01"
-                  min="0.01"
+                  step="1"
+                  min="1"
                   required
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
-                  placeholder="0.00"
-                  className="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-lg font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-bank-500"
+                  placeholder="5000"
+                  className="w-full pl-9 pr-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-lg font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-bank-500"
                 />
               </div>
               {currentSourceAccount && (
@@ -310,7 +311,7 @@ export const Transfer = () => {
                     onClick={() => setAmount(currentSourceAccount.availableBalance.toString())}
                     className="font-bold text-bank-600 hover:underline"
                   >
-                    Max
+                    Transfer Max
                   </button>
                 </div>
               )}
@@ -318,13 +319,13 @@ export const Transfer = () => {
 
             <div>
               <label className="block text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
-                4. Transfer Note / Memo
+                4. Transfer Remarks / Narration
               </label>
               <input
                 type="text"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="e.g. Project consultation payment"
+                placeholder="e.g. Rent, Consultancy, Family Support"
                 maxLength={100}
                 className="w-full px-4 py-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-medium text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-bank-500"
               />
@@ -337,7 +338,7 @@ export const Transfer = () => {
               type="submit"
               className="w-full py-3.5 px-4 rounded-xl bg-bank-600 hover:bg-bank-700 text-white font-bold text-sm shadow-lg shadow-bank-600/30 transition-all flex items-center justify-center space-x-2"
             >
-              <span>Review Transfer Details</span>
+              <span>Review IMPS / NEFT Transfer Details</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
@@ -348,13 +349,13 @@ export const Transfer = () => {
       <Modal
         isOpen={isReviewOpen}
         onClose={() => setIsReviewOpen(false)}
-        title="Review Transaction Summary"
+        title="Review IMPS / NEFT Summary"
         maxWidth="max-w-md"
       >
         <div className="space-y-4 text-xs">
           <div className="p-4 rounded-2xl bg-bank-50 dark:bg-bank-950/60 border border-bank-200 dark:border-bank-800 text-center">
             <span className="text-[11px] text-bank-700 dark:text-bank-300 font-bold uppercase tracking-wider">
-              Total Transfer Amount
+              Total Remittance Amount
             </span>
             <h2 className="text-3xl font-black text-bank-900 dark:text-white mt-1">
               {formatCurrency(amount)}
@@ -369,24 +370,24 @@ export const Transfer = () => {
               </span>
             </div>
             <div className="py-2 flex justify-between">
-              <span className="text-slate-500">Recipient:</span>
+              <span className="text-slate-500">Beneficiary:</span>
               <span className="font-bold text-slate-900 dark:text-white">
                 {transferMode === 'beneficiary'
-                  ? `${currentBeneficiaryObj?.name} (${maskAccountNumber(currentBeneficiaryObj?.accountNumber)})`
+                  ? `${currentBeneficiaryObj?.name} (${maskAccountNumber(currentBeneficiaryObj?.accountNumber)}) - ${currentBeneficiaryObj?.bankName}`
                   : customAccountNumber}
               </span>
             </div>
             <div className="py-2 flex justify-between">
-              <span className="text-slate-500">Transfer Type:</span>
-              <span className="font-medium text-slate-900 dark:text-white">Aegis Instant Wire</span>
+              <span className="text-slate-500">Transfer Channel:</span>
+              <span className="font-semibold text-emerald-600 dark:text-emerald-400">IMPS 24x7 Instant Remittance</span>
             </div>
             <div className="py-2 flex justify-between">
-              <span className="text-slate-500">Processing Fee:</span>
-              <span className="font-bold text-emerald-600">$0.00 (Free)</span>
+              <span className="text-slate-500">Bank Service Charges:</span>
+              <span className="font-bold text-emerald-600">₹0.00 (Zero Fee)</span>
             </div>
             {description && (
               <div className="py-2 flex justify-between">
-                <span className="text-slate-500">Description:</span>
+                <span className="text-slate-500">Narration / Remark:</span>
                 <span className="font-medium text-slate-900 dark:text-white max-w-[180px] text-right">
                   {description}
                 </span>
@@ -429,10 +430,9 @@ export const Transfer = () => {
         onClose={() => setIsOtpOpen(false)}
         onVerify={handleExecuteTransfer}
         purpose="TRANSFER"
-        demoCode={demoOtp}
         isLoading={isSubmitting}
-        title="Verify Transfer Authorization"
-        description={`Enter the 6-digit OTP code to authorize sending ${formatCurrency(amount)}.`}
+        title="Fund Transfer Authorization"
+        description={`A 6-digit IMPS transfer authorization code has been dispatched to your registered email (${user?.email || 'registered email'}). Enter the code below to authorize transferring ${formatCurrency(amount)}.`}
       />
 
       {/* Success Receipt Modal */}

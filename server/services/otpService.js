@@ -3,12 +3,13 @@ import bcrypt from 'bcryptjs';
 import { OTP } from '../models/OTP.js';
 import { logger } from '../config/logger.js';
 import { OTP_PURPOSES } from '../utils/constants.js';
+import { EmailService } from './emailService.js';
 
 export class OTPService {
   /**
-   * Generates a secure random 6-digit OTP and stores its bcrypt hash
+   * Generates a secure random 6-digit OTP, stores bcrypt hash, and dispatches via Brevo Email
    */
-  static async generateOTP({ userId = null, email, purpose, metadata = {} }) {
+  static async generateOTP({ userId = null, email, purpose, fullName = 'Valued Customer', metadata = {} }) {
     // Generate 6-digit random code
     const otpCode = crypto.randomInt(100000, 999999).toString();
     const salt = await bcrypt.genSalt(10);
@@ -33,9 +34,19 @@ export class OTPService {
       metadata,
     });
 
-    // Academic Banking Simulation: Safe simulated MFA logger
+    // Dispatch formal Email via Brevo API
+    if (email) {
+      await EmailService.sendOTPEmail({
+        email,
+        fullName,
+        otpCode,
+        purpose,
+        expiryMinutes,
+      });
+    }
+
     logger.info(`=======================================================`);
-    logger.info(`[ACADEMIC MFA SIMULATION] OTP GENERATED FOR: ${email || userId}`);
+    logger.info(`[SURAKSHA BANK OTP DISPATCHED] FOR: ${email || userId}`);
     logger.info(`[PURPOSE]: ${purpose}`);
     logger.info(`[ONE-TIME CODE]: >>> ${otpCode} <<< (Expires in ${expiryMinutes} minutes)`);
     logger.info(`=======================================================`);
@@ -43,9 +54,7 @@ export class OTPService {
     return {
       success: true,
       expiresAt,
-      // For academic simulation ease of testing in UI/Postman:
-      demoCode: process.env.NODE_ENV !== 'production' ? otpCode : undefined,
-      message: `OTP has been generated and dispatched (Academic simulation demo code: ${otpCode})`,
+      message: `OTP has been dispatched to ${email || 'your registered email'}.`,
     };
   }
 
@@ -57,8 +66,13 @@ export class OTPService {
       purpose,
       isUsed: false,
     };
-    if (userId) query.userId = userId;
-    if (email) query.email = email.toLowerCase();
+    if (userId && email) {
+      query.$or = [{ userId }, { email: email.toLowerCase().trim() }];
+    } else if (userId) {
+      query.userId = userId;
+    } else if (email) {
+      query.email = email.toLowerCase().trim();
+    }
 
     // Find the latest active OTP
     const latestOtp = await OTP.findOne(query).sort({ createdAt: -1 });
@@ -66,7 +80,7 @@ export class OTPService {
     if (!latestOtp) {
       return {
         isValid: false,
-        message: 'No valid OTP found or OTP already used. Please request a new one.',
+        message: 'No active OTP found or code already expired. Please click Resend OTP for a fresh code.',
       };
     }
 

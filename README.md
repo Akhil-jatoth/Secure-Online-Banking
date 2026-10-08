@@ -1,4 +1,4 @@
-# 🛡️ Secure Online Banking System (MERN Stack)
+# 🛡️ Suraksha Bank - Indian Digital Banking Simulation (MERN Stack)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Node Version](https://img.shields.io/badge/node-%3E%3D18.0.0-green.svg)](https://nodejs.org/)
@@ -8,11 +8,11 @@
 [![Tailwind CSS](https://img.shields.io/badge/styling-TailwindCSS-06B6D4.svg)](https://tailwindcss.com/)
 [![Tests Passing](https://img.shields.io/badge/tests-15%2F15%20passing-brightgreen.svg)]()
 
-A comprehensive, production-grade **Secure Online Banking System** built as an academic simulation for a university Software Engineering course using the **MERN Stack** (MongoDB, Express.js, React.js, Node.js). 
+A comprehensive, production-grade **Indian Digital Banking Simulation System** (**Suraksha Bank | सुरक्षा बैंक**) built with the **MERN Stack** (MongoDB, Express.js, React.js, Node.js). 
 
-Designed with an emphasis on **cybersecurity**, **transactional integrity**, **role-based access control (RBAC)**, **two-factor authentication (MFA/OTP)**, **immutable audit logging**, and a responsive modern user interface.
+Designed tailored for Indian retail and commercial banking with **Rupee (₹ INR) currency formatting**, **IMPS / NEFT / RTGS / UPI remittance channels**, **BBPS utility billing** (BESCOM, Tata Power, BWSSB, JioFiber, Airtel, LIC), **Indian bank references** (SBI, ICICI, HDFC, Indian Bank), **friendly clean white & sky blue UI aesthetics**, and a **dedicated separate Admin/Officer Login portal**.
 
-> ⚠️ **Academic Simulation Disclaimer:** This system is built strictly for academic and educational purposes. It does not connect to real-world payment networks, banking rails, or financial APIs.
+> ⚠️ **Academic Simulation Disclaimer:** This system is built strictly for academic and educational purposes adhering to modern Indian digital banking workflows.
 
 ---
 
@@ -20,10 +20,11 @@ Designed with an emphasis on **cybersecurity**, **transactional integrity**, **r
 
 - [Key Highlights & Architecture](#-key-highlights--architecture)
 - [System Features](#-system-features)
-  - [Customer Banking Portal](#customer-banking-portal)
-  - [Administrative Security & Oversight Portal](#administrative-security--oversight-portal)
+  - [Customer NetBanking Portal (`/login`)](#customer-netbanking-portal)
+  - [Administrative Security & Oversight Portal (`/admin/login`)](#administrative-security--oversight-portal)
 - [Security & Engineering Safeguards](#-security--engineering-safeguards)
 - [Technology Stack](#-technology-stack)
+- [Demo Test Accounts](#-demo-test-accounts)
 - [Project Directory Structure](#-project-directory-structure)
 - [Getting Started & Installation](#-getting-started--installation)
   - [Prerequisites](#prerequisites)

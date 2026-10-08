@@ -46,3 +46,33 @@ export const authenticate = async (req, res, next) => {
     return ApiResponse.serverError(res, `Authentication error: ${error.message}`);
   }
 };
+
+export const optionalAuthenticate = async (req, res, next) => {
+  try {
+    let token = null;
+
+    if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+      token = req.headers.authorization.split(' ')[1];
+    } else if (req.cookies && req.cookies.token) {
+      token = req.cookies.token;
+    }
+
+    if (token) {
+      const secret = process.env.JWT_SECRET || 'super_secret_jwt_key_academic_secure_bank_2026_production_grade_random_seed_994821049';
+      try {
+        const decoded = jwt.verify(token, secret);
+        const user = await User.findById(decoded.id);
+        if (user && !user.isLocked()) {
+          req.user = user;
+          req.userId = user._id;
+          req.userRole = user.role;
+        }
+      } catch {
+        // Token invalid or expired, continue without req.user
+      }
+    }
+    next();
+  } catch {
+    next();
+  }
+};

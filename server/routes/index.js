@@ -14,7 +14,7 @@ const router = express.Router();
 router.get('/health', (req, res) => {
   res.status(200).json({
     status: 'UP',
-    system: 'Aegis Secure Online Banking Simulation API',
+    system: 'Suraksha Digital Banking Simulation API (India)',
     timestamp: new Date().toISOString(),
     version: '1.0.0',
   });

@@ -207,7 +207,7 @@ export const TransactionTable = ({ transactions = [], isLoading = false, showVie
           </div>
 
           <div className="mt-4 p-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 text-[11px] text-slate-500 text-center">
-            Certified Electronic Receipt • Aegis Secure Banking Simulation
+            Certified Electronic Receipt • Suraksha Digital Bank (India)
           </div>
 
           <div className="mt-6">

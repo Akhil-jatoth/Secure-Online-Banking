@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { authService } from '../../services/authService.js';
+import { useAuth } from '../../context/AuthContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { OtpModal } from '../../components/OtpModal.jsx';
 import {
@@ -22,9 +23,9 @@ export const SecuritySettings = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isOtpOpen, setIsOtpOpen] = useState(false);
-  const [demoOtp, setDemoOtp] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const { user } = useAuth();
   const toast = useToast();
 
   const passwordCriteria = [
@@ -57,11 +58,10 @@ export const SecuritySettings = () => {
 
     try {
       setIsSubmitting(true);
-      const res = await authService.requestOTP({ purpose: 'CHANGE_PASSWORD' });
+      const res = await authService.requestOTP({ purpose: 'CHANGE_PASSWORD', email: user?.email });
       if (res.success) {
-        setDemoOtp(res.data?.demoCode || null);
         setIsOtpOpen(true);
-        toast.info('Verification code sent for password modification.');
+        toast.info('Verification code sent to your registered email.');
       }
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to request OTP.');

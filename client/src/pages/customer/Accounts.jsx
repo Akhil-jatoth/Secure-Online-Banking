@@ -124,7 +124,7 @@ export const Accounts = () => {
                       <span className="text-xs font-extrabold uppercase tracking-wider block">
                         {acc.accountType} Account
                       </span>
-                      <span className="text-[10px] text-white/70">Aegis Core Banking</span>
+                      <span className="text-[10px] text-white/80">Suraksha Core Banking</span>
                     </div>
                   </div>
 
@@ -137,16 +137,16 @@ export const Accounts = () => {
                   <h2 className="text-3xl font-black tracking-tight mt-1">
                     {formatCurrency(acc.availableBalance, acc.currency)}
                   </h2>
-                  <p className="text-[11px] text-white/60 mt-0.5">
+                  <p className="text-[11px] text-white/70 mt-0.5">
                     Ledger Balance: {formatCurrency(acc.balance, acc.currency)}
                   </p>
                 </div>
 
                 {/* Card Number & Copy */}
-                <div className="pt-4 border-t border-white/15 space-y-3">
+                <div className="pt-4 border-t border-white/20 space-y-3">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-[10px] text-white/60 uppercase">Account Number</p>
+                      <p className="text-[10px] text-white/70 uppercase">Account Number</p>
                       <p className="font-mono text-sm font-bold tracking-wider">
                         {maskAccountNumber(acc.accountNumber)}
                       </p>
@@ -166,9 +166,9 @@ export const Accounts = () => {
                     </button>
                   </div>
 
-                  <div className="flex items-center justify-between text-[11px] text-white/80">
-                    <span>Routing (IFSC): <strong>AEGIS0018</strong></span>
-                    <span>Limit: <strong>$10,000 / day</strong></span>
+                  <div className="flex items-center justify-between text-[11px] text-white/90">
+                    <span>IFSC Code: <strong>SURB0001008</strong></span>
+                    <span>Daily Limit: <strong>₹2,00,000 / day</strong></span>
                   </div>
 
                   <div className="pt-2 flex items-center space-x-2">
@@ -176,7 +176,7 @@ export const Accounts = () => {
                       to="/transfer"
                       className="flex-1 py-2 text-center rounded-xl bg-white/20 hover:bg-white/30 text-white font-bold text-xs backdrop-blur-sm transition-colors"
                     >
-                      Transfer
+                      IMPS Transfer
                     </Link>
                     <Link
                       to="/statements"
@@ -200,17 +200,17 @@ export const Accounts = () => {
           </div>
           <div>
             <h4 className="text-sm font-bold text-slate-900 dark:text-white">
-              FDIC Insured Simulation Protection
+              DICGC (Reserve Bank of India) Guaranteed
             </h4>
             <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
-              All simulated customer accounts are backed by academic grade isolation and 256-bit encryption.
+              Deposits insured up to ₹5,00,000 under DICGC Act with multi-layered bank-grade 256-bit encryption.
             </p>
           </div>
         </div>
 
         <Link
           to="/security"
-          className="text-xs font-bold text-bank-600 dark:text-bank-400 hover:underline flex-shrink-0"
+          className="text-xs font-bold text-sky-600 dark:text-sky-400 hover:underline flex-shrink-0"
         >
           View Security Settings →
         </Link>
@@ -225,7 +225,7 @@ export const Accounts = () => {
       >
         <form onSubmit={handleOpenAccount} className="space-y-5">
           <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
-            Expand your financial management by opening an additional checking or savings account. Comes with an initial $1,000.00 demo deposit.
+            Expand your financial operations with instant account opening. All new accounts come with an initial ₹10,000.00 opening bonus.
           </p>
 
           <div>
@@ -244,7 +244,7 @@ export const Accounts = () => {
               >
                 <div className="font-bold text-sm">Savings Account</div>
                 <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
-                  High yield interest & liquidity
+                  High interest & IMPS/UPI liquidity
                 </div>
               </button>
 
@@ -257,9 +257,9 @@ export const Accounts = () => {
                     : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
                 }`}
               >
-                <div className="font-bold text-sm">Current (Checking)</div>
+                <div className="font-bold text-sm">Current (Vyapar)</div>
                 <div className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
-                  Daily bills & flexible transfers
+                  High volume trade & commercial
                 </div>
               </button>
             </div>
@@ -267,12 +267,12 @@ export const Accounts = () => {
 
           <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 text-[11px] text-slate-600 dark:text-slate-400 space-y-1">
             <div className="flex justify-between">
-              <span>Opening Bonus:</span>
-              <strong className="text-emerald-600 font-mono">+$1,000.00 USD</strong>
+              <span>Opening Balance Bonus:</span>
+              <strong className="text-emerald-600 font-mono">+₹10,000.00 INR</strong>
             </div>
             <div className="flex justify-between">
-              <span>Account Status:</span>
-              <strong className="text-slate-900 dark:text-white">Instantly ACTIVE</strong>
+              <span>Branch / IFSC:</span>
+              <strong className="text-slate-900 dark:text-white font-mono">SURB0001008</strong>
             </div>
           </div>
 

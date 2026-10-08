@@ -39,7 +39,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     const res = await authService.login(credentials);
-    if (res.success && res.data) {
+    if (res.success && res.data?.token) {
       setUser(res.data.user);
       setToken(res.data.token);
       return res;
@@ -49,11 +49,6 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     const res = await authService.register(userData);
-    if (res.success && res.data) {
-      setUser(res.data.user);
-      setToken(res.data.token);
-      return res;
-    }
     return res;
   };
 

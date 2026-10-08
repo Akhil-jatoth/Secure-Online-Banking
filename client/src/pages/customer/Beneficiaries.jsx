@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { beneficiaryService } from '../../services/beneficiaryService.js';
 import { authService } from '../../services/authService.js';
+import { useAuth } from '../../context/AuthContext.jsx';
 import { useToast } from '../../context/ToastContext.jsx';
 import { OtpModal } from '../../components/OtpModal.jsx';
 import { Modal } from '../../components/Modal.jsx';
@@ -30,8 +31,8 @@ export const Beneficiaries = () => {
     name: '',
     nickname: '',
     accountNumber: '',
-    bankName: 'Aegis Bank',
-    routingNumber: 'AEGIS0018',
+    bankName: 'State Bank of India (SBI)',
+    routingNumber: 'SBIN0001008',
   });
 
   // Edit Beneficiary State
@@ -47,6 +48,7 @@ export const Beneficiaries = () => {
   const [demoOtp, setDemoOtp] = useState(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const { user } = useAuth();
   const toast = useToast();
 
   const fetchBeneficiaries = async () => {
@@ -86,12 +88,11 @@ export const Beneficiaries = () => {
   const requestOtpForAction = async (purpose) => {
     try {
       setIsSubmitting(true);
-      const res = await authService.requestOTP({ purpose });
+      const res = await authService.requestOTP({ purpose, email: user?.email });
       if (res.success) {
-        setDemoOtp(res.data?.demoCode || null);
         setIsAddOpen(false);
         setIsOtpOpen(true);
-        toast.info(res.message || 'Verification code dispatched.');
+        toast.info(res.message || 'Verification code dispatched to your registered email.');
       }
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to generate OTP.');
@@ -337,25 +338,44 @@ export const Beneficiaries = () => {
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
                 Bank Name
               </label>
-              <input
-                type="text"
-                required
+              <select
                 value={newBen.bankName}
-                onChange={(e) => setNewBen({ ...newBen, bankName: e.target.value })}
+                onChange={(e) => {
+                  const bName = e.target.value;
+                  let ifsc = 'SBIN0001008';
+                  if (bName.includes('ICICI')) ifsc = 'ICIC0000001';
+                  else if (bName.includes('HDFC')) ifsc = 'HDFC0000123';
+                  else if (bName.includes('Indian Bank')) ifsc = 'IDIB000M001';
+                  else if (bName.includes('Suraksha')) ifsc = 'SURB0001008';
+                  else if (bName.includes('Punjab')) ifsc = 'PUNB0002100';
+                  else if (bName.includes('Axis')) ifsc = 'UTIB0000045';
+                  setNewBen({ ...newBen, bankName: bName, routingNumber: ifsc });
+                }}
                 className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-bank-500"
-              />
+              >
+                <option value="State Bank of India (SBI)">State Bank of India (SBI)</option>
+                <option value="ICICI Bank">ICICI Bank</option>
+                <option value="HDFC Bank">HDFC Bank</option>
+                <option value="Indian Bank">Indian Bank</option>
+                <option value="Suraksha Bank">Suraksha Bank</option>
+                <option value="Punjab National Bank (PNB)">Punjab National Bank</option>
+                <option value="Axis Bank">Axis Bank</option>
+                <option value="Bank of Baroda (BOB)">Bank of Baroda</option>
+                <option value="Kotak Mahindra Bank">Kotak Mahindra Bank</option>
+              </select>
             </div>
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300 mb-1">
-                Routing / IFSC Code
+                Bank IFSC Code
               </label>
               <input
                 type="text"
                 required
                 value={newBen.routingNumber}
-                onChange={(e) => setNewBen({ ...newBen, routingNumber: e.target.value })}
-                className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-mono text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-bank-500"
+                onChange={(e) => setNewBen({ ...newBen, routingNumber: e.target.value.toUpperCase() })}
+                placeholder="e.g. SBIN0001008"
+                className="w-full px-3.5 py-2.5 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-mono font-bold text-slate-900 dark:text-white outline-none focus:ring-2 focus:ring-bank-500"
               />
             </div>
           </div>

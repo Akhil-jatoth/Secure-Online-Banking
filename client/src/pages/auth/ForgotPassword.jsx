@@ -23,9 +23,7 @@ export const ForgotPassword = () => {
       const res = await authService.forgotPassword({ email });
       if (res.success) {
         toast.success(res.message);
-        if (res.demoCode) {
-          setDemoOtp(res.demoCode);
-        }
+        navigate('/reset-password', { state: { email } });
       }
     } catch (err) {
       toast.error(err.response?.data?.message || 'Failed to request reset OTP.');
@@ -46,25 +44,6 @@ export const ForgotPassword = () => {
             Enter your registered email address and we'll dispatch a 6-digit MFA reset authorization code.
           </p>
         </div>
-
-        {demoOtp && (
-          <div className="mb-6 p-4 rounded-xl bg-amber-950/50 border border-amber-800/80 text-amber-200 text-xs">
-            <div className="flex items-center justify-between mb-2">
-              <span className="font-bold flex items-center gap-1.5 text-amber-300">
-                <Sparkles className="w-4 h-4" /> Academic Simulation Demo OTP
-              </span>
-            </div>
-            <p className="text-[11px] mb-3">Your generated one-time code is: <strong className="font-mono text-sm tracking-widest text-amber-100">{demoOtp}</strong></p>
-            <button
-              type="button"
-              onClick={() => navigate('/reset-password', { state: { email, otp: demoOtp } })}
-              className="w-full py-2 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-lg transition-colors flex items-center justify-center gap-1"
-            >
-              <span>Proceed to Reset Password</span>
-              <ArrowRight className="w-3.5 h-3.5" />
-            </button>
-          </div>
-        )}
 
         <form onSubmit={handleRequest} className="space-y-5">
           <div>
