@@ -1,0 +1,29 @@
+{
+  "name": "secure-online-banking",
+  "version": "1.0.0",
+  "description": "Secure Online Banking System - Academic MERN Stack Simulation",
+  "main": "server/server.js",
+  "scripts": {
+    "install:all": "npm install && npm install --prefix server && npm install --prefix client",
+    "server": "npm start --prefix server",
+    "server:dev": "npm run dev --prefix server",
+    "client": "npm run dev --prefix client",
+    "dev": "concurrently \"npm run server:dev\" \"npm run client\"",
+    "seed": "npm run seed --prefix server",
+    "test": "npm test --prefix server",
+    "test:watch": "npm run test:watch --prefix server",
+    "build": "npm run build --prefix client"
+  },
+  "keywords": [
+    "banking",
+    "mern",
+    "security",
+    "fintech",
+    "academic-simulation"
+  ],
+  "author": "Software Engineering Team",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
